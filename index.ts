@@ -1,62 +1,61 @@
 #! /usr/bin/env node
+
 import inquirer from "inquirer";
-import inqirer from "inquirer";
 
 let myBalance = 10000;
-
 let myPin = 1234;
 
-let pinNumber = await inqirer.prompt([
+let pinNumber = await inquirer.prompt([
   {
-    message: "Enter your pin",
-    type: "number",
     name: "pin",
+    type: "number",
+    message: "Enter your pin",
   },
 ]);
 if (pinNumber.pin === myPin) {
-  console.log("Your Pin is correct!!");
-
-  let operationsAns = await inqirer.prompt([
+  console.log("Your pin is correct");
+  let operationAns = await inquirer.prompt([
     {
       name: "operations",
       type: "list",
-      message: "select one of the falowing",
-      choices: ["Cash withdrawl", "Balance check", "Fast cash"],
+      message: "Select one the fallowing methods",
+      choices: ["Cash withdraw", "Check balance", "Fast cash"],
     },
   ]);
-  if (operationsAns.operations === "Cash withdrawl") {
-    let amountAns = await inquirer.prompt([
+  if (operationAns.operations === "Cash withdraw") {
+    let answerAns = await inquirer.prompt([
       {
         name: "amount",
         type: "number",
-        message: "enter your amount",
+        message: "Select the amount to withdraw",
       },
     ]);
-    if (amountAns.amount > myBalance) {
-      console.log("Your balance is insufficiant");
-    } else if (amountAns.amount === myBalance) {
-      myBalance -= amountAns.amount;
-
+    if (answerAns.amount === myBalance) {
+      myBalance -= answerAns.amount;
       console.log("Your remaining balance is " + myBalance);
-    } else if ((myBalance -= amountAns.amount)) {
+    } else if (answerAns.amount > myBalance) {
+      console.log("Your balance is insufficiant");
+    } else if ((myBalance -= answerAns.amount)) {
       console.log("Your remaining balance is " + myBalance);
     }
-  } else if (operationsAns.operations === "Balance check") {
-    console.log("Your remaining balance is " + myBalance);
-  } else if (operationsAns.operations === "Fast cash") {
-    let answerNo = await inqirer.prompt([
+  }
+  if (operationAns.operations === "Check balance") {
+    console.log("Your balance is " + myBalance);
+  }
+  if (operationAns.operations === "Fast cash") {
+    let cashAns = await inquirer.prompt([
       {
-        name: "fastCash",
+        name: "fastcash",
         type: "list",
-        message: "choose one of the fallowing amount",
+        message: "Select one of the fallowing amounts to withdraw",
         choices: ["1000", "5000", "8000", "10000"],
       },
     ]);
-    if (answerNo.fastCash) {
-      myBalance -= answerNo.fastCash;
-      console.log("Remaining balance is " + myBalance);
+    if (cashAns.fastcash) {
+      myBalance -= cashAns.fastcash;
+      console.log("Your remaining balance is " + myBalance);
     }
   }
 } else {
-  console.log("YOUR PIN IS INCORRECT");
+  console.log("Your pin is incorrect!!!");
 }

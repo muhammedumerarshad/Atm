@@ -1,1 +1,1 @@
-Simple atm
+A simple atm machine made with typescript
